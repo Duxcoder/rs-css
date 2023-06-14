@@ -1,8 +1,8 @@
-import Header from 'header/header';
-import Table from 'table/table';
-import CodeArea from 'codeArea/codeArea';
-import Sidebar from 'sidebar/sidebar';
-import Footer from 'footer/footer';
+import Header from './header/header';
+import Table from './table/table';
+import CodeArea from './codeArea/codeArea';
+import Sidebar from './sidebar/sidebar';
+import Footer from './footer/footer';
 
 class View {
   public header: Header;
