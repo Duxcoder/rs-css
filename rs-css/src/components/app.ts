@@ -6,7 +6,7 @@ class App {
     this.manager = new Manager;
   }
   start() {
-    throw new Error('Method not implemented.');
+    this.manager.start();
   }
 }
 

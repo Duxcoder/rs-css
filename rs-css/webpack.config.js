@@ -13,7 +13,7 @@ const config = {
     },
     devServer: {
         hot: false,
-        port: 8001,
+        port: 8002,
         open: true,
         watchFiles: ["src/**/*"],
     },
