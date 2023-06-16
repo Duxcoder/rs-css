@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const EslingPlugin = require('eslint-webpack-plugin');
 
 const isProduction = process.env.NODE_ENV == 'production';
 
@@ -13,7 +14,7 @@ const config = {
     },
     devServer: {
         hot: false,
-        port: 8002,
+        port: 8004,
         open: true,
         watchFiles: ["src/**/*"],
     },
@@ -21,6 +22,7 @@ const config = {
         new HtmlWebpackPlugin({
             template: 'index.html',
         }),
+        new EslingPlugin({ extensions: 'ts' }),
     ],
     module: {
         rules: [
@@ -31,8 +33,8 @@ const config = {
             },
             {
                 test: /\.css$/,
-                use: [stylesHandler, 'css-loader', 'postcss-loader' ]
-             },
+                use: [stylesHandler, 'css-loader', 'postcss-loader']
+            },
             {
                 test: /\.s[ac]ss$/i,
                 use: [stylesHandler, 'css-loader', 'postcss-loader', 'sass-loader'],
@@ -41,10 +43,14 @@ const config = {
                 test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
                 type: 'asset',
             },
+            {
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                type: 'asset/resource',
+            },
         ],
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.jsx', '.js', '...'],
+        extensions: ['.tsx', '.ts', '.jsx', '.js'],
     }
 };
 
