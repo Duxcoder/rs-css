@@ -1,5 +1,5 @@
 import NodeCreator from "../../../util/nodeCreator/nodeCreator";
-import './style.scss'
+import './style.css'
 class Table {
 
   public createTitleTableNode(): HTMLElement {
