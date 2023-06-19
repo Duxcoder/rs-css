@@ -4,7 +4,7 @@ import CodeArea from './codeArea/codeArea';
 import Sidebar from './sidebar/sidebar';
 import Footer from './footer/footer';
 import NodeCreator from '../../util/nodeCreator/nodeCreator';
-
+import { Data } from '../../types';
 class View {
   public header: Header;
   public table: Table;
@@ -30,13 +30,15 @@ class View {
     parentNode.append(renderNode);
   }
 
-  public init(): void {
+  public init(dataLvl: Data): void {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { taskTitle, code, toys, taskSubtitle, description } = dataLvl;
     const main: HTMLElement = this.mainSection();
     const header: HTMLElement = this.header.createHeaderNode();
-    const title: HTMLElement = this.table.createTitleTableNode();
-    const table: HTMLElement = this.table.createTableNode();
-    const sidebar: HTMLElement = this.sidebar.createSidebarNode();
-    const codeArea: HTMLElement = this.codeArea.createCodeAreaNode();
+    const title: HTMLElement = this.table.createTitleTableNode(taskTitle);
+    const table: HTMLElement = this.table.createTableNode(toys);
+    const sidebar: HTMLElement = this.sidebar.createSidebarNode(); // taskSubtitle, description
+    const codeArea: HTMLElement = this.codeArea.createCodeAreaNode(); // code
     const footer: HTMLElement = this.footer.createFooterNode();
 
     document.body.classList.add(...'grid grid-cols-[4/6_2/6] grid-rows-[200px_auto_100px] h-screen'.split(' '));

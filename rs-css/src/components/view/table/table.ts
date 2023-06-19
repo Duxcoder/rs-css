@@ -1,8 +1,17 @@
 import NodeCreator from "../../../util/nodeCreator/nodeCreator";
 import './style.css'
+import wave from './img/wave.png';
+import duckImg from './img/duck.svg';
+import ringImg from './img/ring.svg';
+import ringOImg from './img/ring-o.svg';
+import mattressImg from './img/mattress.svg';
+import ballImg from './img/ball.svg';
+import watermelonImg from './img/watermelon.svg';
+import { Toys } from "../../../types";
+
 class Table {
 
-  public createTitleTableNode(): HTMLElement {
+  public createTitleTableNode(taskTitle: string): HTMLElement {
     const node: NodeCreator = new NodeCreator();
     const title: HTMLElement = node.createNode('section', 'relative isolate px-6 pt-14 lg:px-8'.split(' '));
     title.innerHTML = `
@@ -39,7 +48,7 @@ class Table {
           <h1
             class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
           >
-            Select the plates
+           ${taskTitle}
           </h1>
         </div>
       </div>
@@ -74,12 +83,41 @@ class Table {
     return title;
   }
 
-  public createTableNode(): HTMLElement {
+  public createTableNode(toys: Toys[][]): HTMLElement {
     const node: NodeCreator = new NodeCreator();
-    const table: HTMLElement = node.createNode('section', 'transform-table flex relative min-w-[200px] h-[120px] w-fit p-8 mb-10 justify-center my-0 mx-auto bg-orange-950 z-1'.split(' '));
+    const table: HTMLElement = node.createNode('section', 'bg-bottom bg-[length:400px_100px] transform-table flex rounded-[3rem] relative min-w-[200px] h-[160px] w-fit p-8 mb-10 justify-center my-0 mx-auto bg-blue-500 z-1'.split(' '));
+    table.style.backgroundImage = `url(${wave})`
+    const nodeWrapper: NodeCreator = new NodeCreator();
+    const wrapper: HTMLElement = nodeWrapper.createNode('div', 'flex transform-wrapper'.split(' '));
+    toys.forEach(toy => {
+      wrapper.append(this.createToy(toy))
+    })
+    table.append(wrapper);
     return table;
   }
 
+  public createToy(toyData: Toys[]): HTMLElement {
+    const nodeWrapper: NodeCreator = new NodeCreator();
+    const wrapper: HTMLElement = nodeWrapper.createNode('div', 'flex justify-center relative h-full w-full min-w-[160px] flex-col items-center justify-end'.split(' '));
+
+    toyData.forEach((toy, i) => {
+      const nodeImg: NodeCreator = new NodeCreator();
+      const mode = toy.mode !== 'normal' ? 'opacity-60' : 'opacity-100';
+      const img: HTMLImageElement = <HTMLImageElement>nodeImg.createNode('img', `w-[${10 - (i * 2)}0%] ${mode} max-h-[170%] px-4 absolute`.split(' '));
+      let srcImg = '';
+      switch (toy.name) {
+        case 'duck': srcImg = duckImg; break;
+        case 'ring': srcImg = ringImg; break;
+        case 'ring-o': srcImg = ringOImg; break;
+        case 'mattress': srcImg = mattressImg; break;
+        case 'ball': srcImg = ballImg; break;
+        case 'watermelon': srcImg = watermelonImg; break;
+      }
+      img.src = srcImg;
+      wrapper.append(img);
+    })
+    return wrapper;
+  }
 }
 
 export default Table;

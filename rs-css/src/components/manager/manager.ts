@@ -1,15 +1,18 @@
 import View from '../view/view';
-
+import dataLvls from '../dataApp';
+import { Data } from '../../types';
 class Manager {
   public view: View;
   public events: Record<string, ((data: unknown) => void)[]>;
+  public data: Data[];
   constructor() {
     this.view = new View();
     this.events = {};
+    this.data = dataLvls;
   }
 
   start() {
-    this.view.init();
+    this.view.init(this.data[9]);
   }
 
   emit(eventName: string, data: unknown) {
