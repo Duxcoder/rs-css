@@ -1,7 +1,7 @@
 import NodeCreator from '../../../../util/nodeCreator/nodeCreator';
 
 class Panel {
-  constructor (public mode: 'light' | 'dark' = 'light') {
+  constructor(public mode: 'light' | 'dark' = 'light') {
     this.mode = mode;
   }
   public createPanelNode(content?: HTMLElement): HTMLElement {
@@ -34,8 +34,8 @@ class Panel {
         </ul>
       </div>
       <div class="flex px-4 w-11/12 bg-white text-gray-900">
-       <pre>${contentInner}
-        </pre>
+       <code class="language-html">${contentInner}
+        </code>
       </div>
     </div>`
     return panel;

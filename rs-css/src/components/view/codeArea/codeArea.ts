@@ -1,6 +1,9 @@
 import NodeCreator from "../../../util/nodeCreator/nodeCreator";
 import Panel from "./panel/panel";
 import { Code } from "../../../types";
+import hljs from 'highlight.js/lib/core'
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+hljs.registerLanguage('xml', require('highlight.js/lib/languages/xml'));
 class CodeArea {
   public cssEditor: Panel;
   public htmlViewer: Panel;
@@ -27,7 +30,9 @@ class CodeArea {
         arrSelector.forEach(selector => {
           const span: HTMLElement = node.createNode('span', 'flex'.split(' '));
           if (typeof selector === 'string') {
-            span.textContent = '  '.repeat(countTab) + selector;
+            const tab = '\u00A0'.repeat(countTab)
+            const highlightSelector = hljs.highlight(tab + selector, {language: 'xml'}).value;
+            span.innerHTML = highlightSelector;
           } else {
             return appendCodeRow(selector, countTab + 1);
           }
