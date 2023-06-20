@@ -3,5 +3,5 @@
 }
 
 .transform-wrapper {
-  transform: perspective(150px) rotateX(350deg);
+  transform: perspective(100px) rotateX(350deg);
 }

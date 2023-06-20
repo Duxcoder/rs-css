@@ -38,7 +38,7 @@ class View {
     const title: HTMLElement = this.table.createTitleTableNode(taskTitle);
     const table: HTMLElement = this.table.createTableNode(toys);
     const sidebar: HTMLElement = this.sidebar.createSidebarNode(); // taskSubtitle, description
-    const codeArea: HTMLElement = this.codeArea.createCodeAreaNode(); // code
+    const codeArea: HTMLElement = this.codeArea.createCodeAreaNode(code); // code
     const footer: HTMLElement = this.footer.createFooterNode();
 
     document.body.classList.add(...'grid grid-cols-[4/6_2/6] grid-rows-[200px_auto_100px] h-screen'.split(' '));

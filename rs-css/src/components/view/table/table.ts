@@ -98,12 +98,12 @@ class Table {
 
   public createToy(toyData: Toys[]): HTMLElement {
     const nodeWrapper: NodeCreator = new NodeCreator();
-    const wrapper: HTMLElement = nodeWrapper.createNode('div', 'flex justify-center relative h-full w-full min-w-[160px] flex-col items-center justify-end'.split(' '));
+    const wrapper: HTMLElement = nodeWrapper.createNode('div', 'flex justify-center relative h-full w-[10vw] flex-col items-center justify-end'.split(' '));
 
     toyData.forEach((toy, i) => {
       const nodeImg: NodeCreator = new NodeCreator();
       const mode = toy.mode !== 'normal' ? 'opacity-60' : 'opacity-100';
-      const img: HTMLImageElement = <HTMLImageElement>nodeImg.createNode('img', `w-[${10 - (i * 2)}0%] ${mode} max-h-[170%] px-4 absolute`.split(' '));
+      const img: HTMLImageElement = <HTMLImageElement>nodeImg.createNode('img', `${mode} max-h-[130px] px-4 absolute w-[${10 - i * 2}0%]`.split(' '));
       let srcImg = '';
       switch (toy.name) {
         case 'duck': srcImg = duckImg; break;

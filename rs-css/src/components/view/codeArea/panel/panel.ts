@@ -4,9 +4,10 @@ class Panel {
   constructor (public mode: 'light' | 'dark' = 'light') {
     this.mode = mode;
   }
-  public createPanelNode(): HTMLElement {
+  public createPanelNode(content?: HTMLElement): HTMLElement {
     const node = new NodeCreator();
     const panel = node.createNode('div', 'flex w-full flex-col'.split(' '));
+    const contentInner = content?.outerHTML;
     panel.innerHTML = `
     <div class="flex justify-between items-center px-8 h-10 bg-blue-100 w-full">
       <span class ="text-white">CSS Editor</span>
@@ -32,11 +33,8 @@ class Panel {
           <li>15</li>
         </ul>
       </div>
-      <div class="flex w-11/12 bg-white text-gray-900">
-       <pre>
-          &lt;hello&gt;
-            <bra>d</bra>
-          </helo>
+      <div class="flex px-4 w-11/12 bg-white text-gray-900">
+       <pre>${contentInner}
         </pre>
       </div>
     </div>`
