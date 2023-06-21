@@ -1,6 +1,7 @@
 import NodeCreator from "../../../util/nodeCreator/nodeCreator";
-
+import Emitter from "../../emitter/emitter";
 class Sidebar {
+  constructor(public emitter: Emitter) {}
   public createSidebarNode(): HTMLElement {
     const node: NodeCreator = new NodeCreator();
     const sidebar: HTMLElement = node.createNode('aside', 'flex flex-col items-center gap-3 p-6 row-span-2 bg-blue-950 text-white'.split(' '));

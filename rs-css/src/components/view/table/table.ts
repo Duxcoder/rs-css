@@ -8,9 +8,11 @@ import mattressImg from './img/mattress.svg';
 import ballImg from './img/ball.svg';
 import watermelonImg from './img/watermelon.svg';
 import { Toys } from "../../../types";
+import Emitter from "../../emitter/emitter";
 
 class Table {
-
+  constructor(public emitter: Emitter) {}
+  public imgs: HTMLElement[] = [];
   public createTitleTableNode(taskTitle: string): HTMLElement {
     const node: NodeCreator = new NodeCreator();
     const title: HTMLElement = node.createNode('section', 'relative isolate px-6 pt-14 lg:px-8'.split(' '));
@@ -93,6 +95,16 @@ class Table {
       wrapper.append(this.createToy(toy))
     })
     table.append(wrapper);
+    const selectImg = (index: number | undefined ) => {
+      if (index !== undefined)
+      this.imgs[index].classList.add('drop-shadow-[2px_4px_6px_rgba(0,0,0,1)]');
+    }
+    const unselectImg = () => {
+      this.imgs.forEach(img => img.classList.remove('drop-shadow-[2px_4px_6px_rgba(0,0,0,1)]'));
+    }
+    this.emitter.subscribe('unselectImgOnTable', unselectImg);
+    this.emitter.subscribe('selectImgOnTable', selectImg);
+
     return table;
   }
 
@@ -115,6 +127,7 @@ class Table {
       }
       img.src = srcImg;
       wrapper.append(img);
+      this.imgs.push(img);
     })
     return wrapper;
   }

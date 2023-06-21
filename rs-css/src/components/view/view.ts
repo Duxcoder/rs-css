@@ -5,6 +5,7 @@ import Sidebar from './sidebar/sidebar';
 import Footer from './footer/footer';
 import NodeCreator from '../../util/nodeCreator/nodeCreator';
 import { Data } from '../../types';
+import Emitter from '../emitter/emitter';
 class View {
   public header: Header;
   public table: Table;
@@ -12,11 +13,11 @@ class View {
   public sidebar: Sidebar;
   public footer: Footer;
 
-  constructor() {
+  constructor(emitter: Emitter) {
     this.header = new Header();
-    this.table = new Table();
-    this.codeArea = new CodeArea();
-    this.sidebar = new Sidebar();
+    this.table = new Table(emitter);
+    this.codeArea = new CodeArea(emitter);
+    this.sidebar = new Sidebar(emitter);
     this.footer = new Footer();
   }
 
