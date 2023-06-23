@@ -52,27 +52,52 @@ class CodeArea {
   }
 
   mouseEvents() {
-    const giveNode = (nodes: (HTMLElement | HTMLElement[])[] | HTMLElement, i:number, callback: CallbackGiveNode) => {
+    const giveNode = (nodes: (HTMLElement | HTMLElement[])[] | HTMLElement, i: number, callback: CallbackGiveNode) => {
       if (Array.isArray(nodes)) {
         index++;
         nodes.forEach(node => {
           giveNode(node, i + 1, callback);
         });
       } else {
-        console.log(nodes, i);
         callback(nodes, i);
       }
     };
     let index = -1;
-    this.nodesViewer.forEach((nodesRow) => giveNode(nodesRow, index, (node, i = 0) => {
-      node.addEventListener('mouseleave', function () { runEmitOut() });
-      node.addEventListener('mouseover', function () { runEmitIn(i) });
+    this.nodesViewer.forEach((nodesRow, rowIndex) => giveNode(nodesRow, index, (node, i = 0) => {
+      node.addEventListener('mouseleave', function () {
+        runEmitOut();
+        leaveNodes(rowIndex);
+      });
+      node.addEventListener('mouseover', function () {
+        runEmitIn(i);
+        hoverNodes(node, rowIndex);
+      });
     }))
     const runEmitIn = (i: number) => {
       this.emitter.emit('selectImgOnTable', i);
     }
     const runEmitOut = () => {
       this.emitter.emit('unselectImgOnTable');
+    }
+    const hoverNodes = (node: HTMLElement | HTMLElement[], rowIndex: number) => {
+      if (this.nodesViewer[rowIndex].includes(node)) {
+        this.nodesViewer[rowIndex].forEach(node => {
+          if (node instanceof HTMLElement) {
+            node.classList.add('select')
+          } else {
+            node[0].classList.add('select')
+          }
+        })
+      } else {
+        if (node instanceof HTMLElement) {
+          node.classList.add('select');
+        }
+      }
+    }
+    const leaveNodes = (rowIndex: number) => {
+      this.nodesViewer[rowIndex].forEach((nodes, i) => giveNode(nodes, i, (node) => {
+        node.classList.remove('select')
+      }))
     }
   }
 }
