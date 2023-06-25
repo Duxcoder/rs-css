@@ -12,6 +12,7 @@ class View {
   public codeArea: CodeArea;
   public sidebar: Sidebar;
   public footer: Footer;
+  private nodesPage!: { main: HTMLElement; header: HTMLElement; title: HTMLElement; table: HTMLElement; sidebar: HTMLElement; codeArea: HTMLElement; footer: HTMLElement; };
 
   constructor(emitter: Emitter) {
     this.header = new Header();
@@ -31,15 +32,16 @@ class View {
     parentNode.append(renderNode);
   }
 
-  public init(dataLvl: Data): void {
+  public init(dataLvl: Data, lvls: number, lvl: number, completeLvls: number[]): void {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { taskTitle, code, toys, taskSubtitle, description } = dataLvl;
     const main: HTMLElement = this.mainSection();
     const header: HTMLElement = this.header.createHeaderNode();
     const title: HTMLElement = this.table.createTitleTableNode(taskTitle);
     const table: HTMLElement = this.table.createTableNode(toys);
-    const sidebar: HTMLElement = this.sidebar.createSidebarNode(); // taskSubtitle, description
+    const sidebar: HTMLElement = this.sidebar.createSidebarNode(lvls, lvl, completeLvls); // taskSubtitle, description
     const codeArea: HTMLElement = this.codeArea.createCodeAreaNode(code); // code
+    const runEventsCodeArea = () => this.codeArea.mouseEvents(dataLvl.answer);
     const footer: HTMLElement = this.footer.createFooterNode();
 
     document.body.classList.add(...'grid grid-cols-[4/6_2/6] grid-rows-[200px_auto_100px] h-screen'.split(' '));
@@ -50,6 +52,20 @@ class View {
     this.render(main, codeArea);
     this.render(document.body, sidebar);
     this.render(document.body, footer);
+
+    runEventsCodeArea();
+
+    this.nodesPage = {
+      main, header, title, table, sidebar, codeArea, footer
+    }
+  }
+  private clearPage = () => {
+    document.body.innerHTML = '';
+  }
+
+  public updateLvl(dataLvl: Data, lvls: number, lvl: number, completeLvls: number[]): void {
+    this.clearPage();
+    this.init(dataLvl, lvls, lvl, completeLvls);
   }
 }
 

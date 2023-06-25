@@ -11,23 +11,26 @@ class CodeArea {
   public nodesViewer!: (HTMLElement | HTMLElement[])[][];
   public cssEditor: Panel;
   public htmlViewer: Panel;
+  private btn: HTMLElement | undefined;
+  private input: HTMLElement | undefined;
+  private wrapper: HTMLElement | undefined;
   constructor(public emitter: Emitter) {
     this.cssEditor = new Panel();
     this.htmlViewer = new Panel('dark');
   }
   public createCodeAreaNode(code: Code): HTMLElement {
-    const cssEditor = this.cssEditor.createPanelNode();
-    const codeContent: HTMLElement = this.transformCode(code);
-    const htmlViewer = this.htmlViewer.createPanelNode(codeContent, 'HTML Viewer', 'table.html');
+    const editorContent: HTMLElement = this.editorContent();
+    const cssEditor = this.cssEditor.createPanelNode(editorContent, 'CSS Editor', 'style.css');
+    const viewerContent: HTMLElement = this.transformCode(code);
+    const htmlViewer = this.htmlViewer.createPanelNode(viewerContent, 'HTML Viewer', 'table.html');
 
     const node: NodeCreator = new NodeCreator();
     const codeArea: HTMLElement = node.createNode('section', 'flex bg-stone-300 flex-col xl:flex-row'.split(' '));
     codeArea.append(cssEditor, htmlViewer);
-    this.mouseEvents()
     return codeArea;
   }
 
-  public transformCode(code: Code): HTMLElement {
+  private transformCode(code: Code): HTMLElement {
     const node: NodeCreator = new NodeCreator();
     const pre: HTMLElement = node.createNode('pre', 'flex flex-col'.split(' '));
     const appendCodeRow = (arrSelector: (string | string[])[], countTab = 1): (HTMLElement | HTMLElement[])[] => {
@@ -51,7 +54,20 @@ class CodeArea {
     return pre;
   }
 
-  mouseEvents() {
+  private editorContent() {
+    const node: NodeCreator = new NodeCreator();
+    const input = node.createNode('input', 'w-full h-8 outline-none'.split(' '));
+    const wrapper: HTMLElement = node.createNode('div', 'flex w-full h-full m-0'.split(' '));
+    const btn: HTMLElement = node.createNode('button', 'flex justify-center items-center w-[100px] h-8 transition bg-gray-800 text-white hover:bg-gray-400'.split(' '), 'Enter')
+    this.btn = btn;
+    this.input = input;
+    this.wrapper = wrapper;
+    wrapper.append(input, btn)
+
+    return wrapper;
+  }
+
+  mouseEvents(answer: string[]) {
     const giveNode = (nodes: (HTMLElement | HTMLElement[])[] | HTMLElement, i: number, callback: CallbackGiveNode) => {
       if (Array.isArray(nodes)) {
         index++;
@@ -98,6 +114,32 @@ class CodeArea {
       this.nodesViewer[rowIndex].forEach((nodes, i) => giveNode(nodes, i, (node) => {
         node.classList.remove('select')
       }))
+    }
+
+    const runEmitRightAnswer = () => this.emitter.emit('nextLvl', { rightAnswer: true });
+
+    const { input, btn, wrapper } = this;
+    if (btn !== undefined &&
+      input !== undefined &&
+      wrapper !== undefined) {
+
+      const enterBtn = function () {
+        if (input instanceof HTMLInputElement) {
+          const rightAnswer = answer.includes(input.value);
+
+          if (!rightAnswer) {
+            wrapper.classList.add('shake');
+            setTimeout(() => { wrapper.classList.remove('shake') }, 400);
+          }
+
+          if (rightAnswer) runEmitRightAnswer();
+        }
+      }
+
+      btn.addEventListener('click', enterBtn);
+      wrapper.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') enterBtn()
+      });
     }
   }
 }

@@ -7,11 +7,11 @@ import ringOImg from './img/ring-o.svg';
 import mattressImg from './img/mattress.svg';
 import ballImg from './img/ball.svg';
 import watermelonImg from './img/watermelon.svg';
-import { Toys } from "../../../types";
+import { Toys, NextLvl } from "../../../types";
 import Emitter from "../../emitter/emitter";
 
 class Table {
-  constructor(public emitter: Emitter) {}
+  constructor(public emitter: Emitter) { }
   public imgs: HTMLElement[] = [];
   public createTitleTableNode(taskTitle: string): HTMLElement {
     const node: NodeCreator = new NodeCreator();
@@ -95,16 +95,7 @@ class Table {
       wrapper.append(this.createToy(toy))
     })
     table.append(wrapper);
-    const selectImg = (index: number | undefined ) => {
-      if (index !== undefined)
-      this.imgs[index].classList.add('drop-shadow-[2px_4px_6px_rgba(0,0,0,1)]');
-    }
-    const unselectImg = () => {
-      this.imgs.forEach(img => img.classList.remove('drop-shadow-[2px_4px_6px_rgba(0,0,0,1)]'));
-    }
-    this.emitter.subscribe('unselectImgOnTable', unselectImg);
-    this.emitter.subscribe('selectImgOnTable', selectImg);
-
+    this.mouseEvents();
     return table;
   }
 
@@ -130,6 +121,23 @@ class Table {
       this.imgs.push(img);
     })
     return wrapper;
+  }
+
+  mouseEvents() {
+    const selectImg = (index: number | undefined | NextLvl) => {
+      if (index !== undefined && typeof index === 'number')
+        this.imgs[index].classList.add('drop-shadow-[2px_4px_6px_rgba(0,0,0,1)]');
+    }
+    const unselectImg = () => {
+      this.imgs.forEach(img => img.classList.remove('drop-shadow-[2px_4px_6px_rgba(0,0,0,1)]'));
+    }
+    this.emitter.subscribe('unselectImgOnTable', unselectImg);
+    this.emitter.subscribe('selectImgOnTable', selectImg);
+
+    this.imgs.forEach((img, i) => {
+      img.addEventListener('mouseover', () => selectImg(i));
+      img.addEventListener('mouseleave', unselectImg);
+    })
   }
 }
 

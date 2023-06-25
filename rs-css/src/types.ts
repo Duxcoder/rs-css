@@ -16,4 +16,6 @@ interface Toys {
 
 type NamesToy = 'duck' | 'ring' | 'ring-o' | 'mattress' | 'ball' | 'watermelon';
 
-export { Data, Toys, NamesToy, Code }
+type NextLvl = { rightAnswer?: boolean, selectLvl?: number }
+
+export { Data, Toys, NamesToy, Code, NextLvl }

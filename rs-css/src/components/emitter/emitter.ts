@@ -1,20 +1,25 @@
+import { NextLvl } from '../../types'
 
 class Emitter {
-  public events: Record<string, ((data?: number) => void)[]>;
+  public events: Record<string, ((data?: number | NextLvl) => void)[]>;
   constructor() {
     this.events = {};
   }
 
-  emit(eventName: string, data?: number) {
+  emit(eventName: string, data?: number | NextLvl) {
     const event = this.events[eventName];
     if (event) {
       event.forEach(fn => {
-        data !== undefined ? fn(data) : fn();
+        if (data !== undefined) {
+          fn(data);
+        } else {
+          fn();
+        }
       });
     }
   }
 
-  subscribe(eventName: string, callback: (arg?: number) => void) {
+  subscribe(eventName: string, callback: (arg?: number | NextLvl) => void) {
     if (!this.events[eventName]) {
       this.events[eventName] = [];
     }
