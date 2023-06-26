@@ -39,12 +39,13 @@ class View {
     const header: HTMLElement = this.header.createHeaderNode();
     const title: HTMLElement = this.table.createTitleTableNode(taskTitle);
     const table: HTMLElement = this.table.createTableNode(toys);
+    const runEventsTable = () => this.table.mouseEvents();
     const sidebar: HTMLElement = this.sidebar.createSidebarNode(lvls, lvl, completeLvls); // taskSubtitle, description
     const codeArea: HTMLElement = this.codeArea.createCodeAreaNode(code); // code
     const runEventsCodeArea = () => this.codeArea.mouseEvents(dataLvl.answer);
     const footer: HTMLElement = this.footer.createFooterNode();
 
-    document.body.classList.add(...'grid grid-cols-[4/6_2/6] grid-rows-[200px_auto_100px] h-screen'.split(' '));
+    document.body.classList.add(...'grid grid-cols-[auto_200px] grid-rows-[200px_auto_100px] h-screen'.split(' '));
     this.render(document.body, main)
     this.render(main, header);
     this.render(main, title);
@@ -53,6 +54,7 @@ class View {
     this.render(document.body, sidebar);
     this.render(document.body, footer);
 
+    runEventsTable();
     runEventsCodeArea();
 
     this.nodesPage = {

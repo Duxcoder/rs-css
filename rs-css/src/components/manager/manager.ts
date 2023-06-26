@@ -22,15 +22,18 @@ class Manager {
     this.view.init(dataLvl, maxLvl, this.lvl, this.completeLvls);
     this.emitter.subscribe('nextLvl', (data?: number | NextLvl) => {
       if (data !== undefined && typeof data !== 'number') {
-        if (data.rightAnswer) {
-          this.completeLvls[this.lvl] = this.lvl;
-        }
+
         if (data.selectLvl !== undefined) {
           this.lvl = data.selectLvl;
-        } else {
-          this.data.length - 1 > this.lvl ? this.lvl++ : this.lvl = 0;
+          return this.newLvl(this.lvl)
         }
-        this.newLvl(this.lvl)
+
+        if (data.rightAnswer) {
+          this.completeLvls[this.lvl] = this.lvl;
+          this.data.length - 1 > this.lvl ? this.lvl++ : this.lvl = 0;
+          return setTimeout(() => this.newLvl(this.lvl), 500);
+        }
+
       }
     });
   }

@@ -85,17 +85,18 @@ class Table {
     return title;
   }
 
+  private clearImgsStore = () => this.imgs = [];
   public createTableNode(toys: Toys[][]): HTMLElement {
     const node: NodeCreator = new NodeCreator();
     const table: HTMLElement = node.createNode('section', 'bg-bottom bg-[length:400px_100px] transform-table flex rounded-[3rem] relative min-w-[200px] h-[160px] w-fit p-8 mb-10 justify-center my-0 mx-auto bg-blue-500 z-1'.split(' '));
     table.style.backgroundImage = `url(${wave})`
     const nodeWrapper: NodeCreator = new NodeCreator();
     const wrapper: HTMLElement = nodeWrapper.createNode('div', 'flex transform-wrapper'.split(' '));
+    this.clearImgsStore();
     toys.forEach(toy => {
       wrapper.append(this.createToy(toy))
     })
     table.append(wrapper);
-    this.mouseEvents();
     return table;
   }
 
@@ -104,9 +105,10 @@ class Table {
     const wrapper: HTMLElement = nodeWrapper.createNode('div', 'flex justify-center relative h-full w-[10vw] flex-col items-center justify-end'.split(' '));
 
     toyData.forEach((toy, i) => {
-      const nodeImg: NodeCreator = new NodeCreator();
+      const node: NodeCreator = new NodeCreator();
       const mode = toy.mode !== 'normal' ? 'opacity-60' : 'opacity-100';
-      const img: HTMLImageElement = <HTMLImageElement>nodeImg.createNode('img', `${mode} max-h-[130px] px-4 absolute w-[${10 - i * 2}0%]`.split(' '));
+      const img: HTMLImageElement = <HTMLImageElement>node.createNode('img', `${mode} max-h-[130px] absolute px-4 w-[${10 - i * 2}0%]`.split(' '));
+      const wrapperImg = node.createNode('div', 'flex w-full h-full absolute justify-center items-center'.split(' '));
       let srcImg = '';
       switch (toy.name) {
         case 'duck': srcImg = duckImg; break;
@@ -117,23 +119,43 @@ class Table {
         case 'watermelon': srcImg = watermelonImg; break;
       }
       img.src = srcImg;
-      wrapper.append(img);
-      this.imgs.push(img);
+      wrapperImg.append(img);
+      wrapperImg.dataset.alt = toy.alt;
+      wrapper.append(wrapperImg);
+      this.imgs.push(wrapperImg);
     })
     return wrapper;
   }
 
   mouseEvents() {
     const selectImg = (index: number | undefined | NextLvl) => {
-      if (index !== undefined && typeof index === 'number')
-        this.imgs[index].classList.add('drop-shadow-[2px_4px_6px_rgba(0,0,0,1)]');
+      if (index !== undefined && typeof index === 'number') {
+        const firstChild = this.imgs[index].firstElementChild;
+        this.imgs[index].classList.add('hover');
+        if (firstChild !== null) {
+          firstChild.classList.add('drop-shadow-[2px_4px_6px_rgba(0,0,0,1)]', 'hover');
+        }
+      }
+
     }
     const unselectImg = () => {
-      this.imgs.forEach(img => img.classList.remove('drop-shadow-[2px_4px_6px_rgba(0,0,0,1)]'));
+      this.imgs.forEach(wrapImg => {
+        const firstChild = wrapImg.firstElementChild;
+        wrapImg.classList.remove('hover');
+        if (firstChild !== null) {
+          firstChild.classList.remove('drop-shadow-[2px_4px_6px_rgba(0,0,0,1)]');
+        }
+      });
     }
     this.emitter.subscribe('unselectImgOnTable', unselectImg);
     this.emitter.subscribe('selectImgOnTable', selectImg);
-
+    this.emitter.subscribe('nextLvl', (data?: number | NextLvl) => {
+      if (data !== undefined && typeof data !== 'number') {
+        if (data.rightAnswer) {
+          this.imgs.forEach(img => img.classList.add('bubbled'))
+        }
+      }
+    });
     this.imgs.forEach((img, i) => {
       img.addEventListener('mouseover', () => selectImg(i));
       img.addEventListener('mouseleave', unselectImg);

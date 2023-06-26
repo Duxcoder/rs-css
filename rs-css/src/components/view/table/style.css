@@ -1,7 +1,54 @@
+:root {
+--waveValue: 0.1rem;
+--waveValueMin: -0.1rem;
+}
 .transform-table {
   transform: perspective(100px) rotateX(10deg);
 }
 
 .transform-wrapper {
   transform: perspective(100px) rotateX(350deg);
+}
+
+@keyframes cleanme {
+  0% {   transform: translateY(0px) rotate3d(0,0,0,0deg); }
+  100% { transform: translateY(-600px) rotate3d(0,0,0,0deg);}
+}
+
+.bubbled {
+  animation: cleanme .2s 1 forwards;
+}
+@keyframes wave {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.wave {
+  animation: wave 1s infinite ease-in-out;
+}
+
+.hover::after {
+  content: attr(data-alt);
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px;
+  background: rgb(0 154 225 / 34%);
+  border-radius: 4rem;
+  color: #0d586c;
+  font-size: 14px;
+  width: max-content;
+  top: -80%;
+  filter: none;
+}
+.hover:hover::after {
+  filter: none;
 }
