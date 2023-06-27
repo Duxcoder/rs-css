@@ -6,7 +6,7 @@ class App {
     this.manager = new Manager;
   }
   start() {
-    this.manager.start();
+    this.manager.init();
   }
 }
 

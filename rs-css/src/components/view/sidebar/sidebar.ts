@@ -42,7 +42,19 @@ class Sidebar {
       ul.append(li);
     }
     sidebar.append(ul);
+    const btn = this.createBtn();
+    sidebar.append(btn);
     return sidebar;
+  }
+
+  createBtn() {
+    const node: NodeCreator = new NodeCreator;
+    const btn = node.createNode('button', 'flex bg-slate-500 px-4 py-2 transition-color hover:text-slate-600 hover:bg-slate-300'.split(' '), 'PLAY AGAIN');
+    btn.addEventListener('click', () => {
+      localStorage.setItem('restart', 'on');
+      this.emitter.emit('restart');
+    }, {once: true});
+    return btn;
   }
 }
 
