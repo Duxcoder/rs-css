@@ -11,7 +11,7 @@ const dataLvls: Data[] = [
       [{ name: 'ring', mode: 'normal', alt: '<ring></ring>', rightAnswer: true }],
       [{ name: 'ring', mode: 'normal', alt: '<ring></ring>', rightAnswer: true }],
     ],
-    answer: ['ring', '*'],
+    answer: ['ring', '*', '.sea > ring', '.sea>ring', '.sea ring:first-child, .sea ring:nth-child(2)', 'ring:first-child, ring:nth-child(2)'],
     taskSubtitle: 'Select elements by their type',
     description: 'Selects all elements of type A. Type refers to the type of tag, so div, p and ul are all different element types.'
   },
@@ -26,7 +26,7 @@ const dataLvls: Data[] = [
       [{ name: 'ring', mode: 'normal', alt: '<ring></ring>' }],
       [{ name: 'mattress', mode: 'normal', alt: '<mattress></mattress>', rightAnswer: true }],
     ],
-    answer: ['mattress'],
+    answer: ['mattress', '.sea > mattress', '.sea>mattress', '.sea mattress:first-child, .sea mattress:nth-child(3)', 'mattress:first-child, mattress:nth-child(2)'],
     taskSubtitle: 'Select elements by their type',
     description: 'Selects all elements of type A. Type refers to the type of tag, so div, p and ul are all different element types.'
   },
@@ -41,7 +41,7 @@ const dataLvls: Data[] = [
       [{ name: 'ring', mode: 'normal', alt: '<ring></ring>' }],
       [{ name: 'mattress', mode: 'normal', alt: '<mattress></mattress>' }],
     ],
-    answer: ['ring#orange', '#orange'],
+    answer: ['#orange', '.ring:first-child', '.sea #orange', '[id="orange"]', 'ring#orange', '.sea > #orange', '.sea>#orange'],
     taskSubtitle: 'Select elements with an ID',
     description: 'Selects the element with a specific id. You can also combine the ID selector with the type selector.'
   },
@@ -57,7 +57,7 @@ const dataLvls: Data[] = [
       { name: 'duck', mode: 'normal', alt: '<duck></duck>', rightAnswer: true }],
       [{ name: 'duck', mode: 'normal', alt: '<duck></duck>' }],
     ],
-    answer: ['ring>duck', 'ring duck'],
+    answer: ['ring > duck', 'ring>duck', 'ring duck', 'ring + duck', 'ring ~ duck', 'ring duck:nth-child(1)', 'duck:nth-child(1)', 'ring duck:first-child', 'duck:first-child'],
     taskSubtitle: 'Select an element inside another element',
     description: 'Selects all B inside of A. B is called a descendant because it is inside of another element.'
   },
@@ -75,7 +75,7 @@ const dataLvls: Data[] = [
       [{ name: 'ring', mode: 'normal', alt: '<ring></ring>' },
       { name: 'ball', mode: 'normal', alt: '<ball></ball>' }],
     ],
-    answer: ['ring#orange ball', '#orange ball'],
+    answer: ['ring#orange ball', '#orange ball', '#orange > ball', '#orange ball:first-child', '#orange ball:nth-child(1)'],
     taskSubtitle: 'Combine the Descendant & ID Selectors',
     description: 'You can combine any selector with the descendent selector.'
   },
@@ -93,7 +93,7 @@ const dataLvls: Data[] = [
       { name: 'duck', mode: 'invisible', alt: '<duck></duck>', rightAnswer: true }],
       [{ name: 'mattress', mode: 'normal', alt: '<mattress></mattress>' }]
     ],
-    answer: ['duck.invisible', '.invisible'],
+    answer: ['.sea .invisible', '.invisible', 'duck.invisible', '.sea duck.invisible', '.sea > .invisible'],
     taskSubtitle: 'Select elements by their class',
     description: 'The class selector selects all elements with that class attribute. Elements can only have one ID, but many classes.'
   },
@@ -116,7 +116,7 @@ const dataLvls: Data[] = [
       [{ name: 'ring', mode: 'normal', alt: '<ring></ring>' },
       { name: 'ball', mode: 'invisible', alt: '<ball></ball>', rightAnswer: true }],
     ],
-    answer: ['ball.invisible', 'ring ball.invisible, mattress ball.invisible'],
+    answer: ['.sea ball.invisible', '.invisible', 'ball.invisible', '.sea > ball.invisible', 'ring ball.invisible, mattress ball.invisible'],
     taskSubtitle: 'Combine the Class Selector',
     description: 'You can combine the class selector with other selectors, like the type selector.'
   },
@@ -140,7 +140,7 @@ const dataLvls: Data[] = [
       [{ name: 'mattress', mode: 'normal', alt: '<mattress></mattress>' },
       { name: 'ball', mode: 'invisible', alt: '<ball></ball>', rightAnswer: true }],
     ],
-    answer: ['mattress ball.invisible'],
+    answer: ['.sea .mattress ball.invisible', '.mattress ball.invisible', '.sea .mattress > ball.invisible', '.mattress > ball.invisible'],
     taskSubtitle: 'You can do it...',
     description: 'Combine what you learned in the last few levels to solve this one!'
   },
@@ -167,7 +167,7 @@ const dataLvls: Data[] = [
       [{ name: 'watermelon', mode: 'normal', alt: '<watermelon></watermelon>' }],
       [{ name: 'watermelon', mode: 'invisible', alt: '<watermelon></watermelon>' }]
     ],
-    answer: ['ring, mattress'],
+    answer: ['ring, mattress', 'ring,mattress','mattress, ring', 'mattress,ring', '.sea ring, .sea mattress'],
     taskSubtitle: 'Combine, selectors, with... commas!',
     description: 'Thanks to Shatner technology, this selects all A and B elements. You can combine any selectors this way, and you can specify more than two.'
   },
@@ -191,7 +191,7 @@ const dataLvls: Data[] = [
       [{ name: 'mattress', mode: 'normal', alt: '<mattress></mattress>', rightAnswer: true },
       { name: 'watermelon', mode: 'normal', alt: '<watermelon></watermelon>', rightAnswer: true }],
     ],
-    answer: ['*'],
+    answer: ['*', '.sea *'],
     taskSubtitle: 'You can select everything!',
     description: 'You can select all elements with the universal selector!'
   },
