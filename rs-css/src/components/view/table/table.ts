@@ -88,10 +88,10 @@ class Table {
   private clearImgsStore = () => this.imgs = [];
   public createTableNode(toys: Toys[][]): HTMLElement {
     const node: NodeCreator = new NodeCreator();
-    const table: HTMLElement = node.createNode('section', 'bg-bottom bg-[length:400px_100px] transform-table flex rounded-[3rem] relative min-w-[200px] h-[160px] w-fit p-8 mb-10 justify-center my-0 mx-auto bg-blue-500 z-1'.split(' '));
+    const table: HTMLElement = node.createNode('section', 'animTable bg-bottom bg-[length:400px_100px] transform-table flex rounded-[3rem] relative min-w-[200px] h-[160px] w-fit p-8 mb-10 justify-center my-0 mx-auto bg-blue-500 z-1'.split(' '));
     table.style.backgroundImage = `url(${wave})`
     const nodeWrapper: NodeCreator = new NodeCreator();
-    const wrapper: HTMLElement = nodeWrapper.createNode('div', 'flex transform-wrapper'.split(' '));
+    const wrapper: HTMLElement = nodeWrapper.createNode('div', 'flex gap-3 transform-wrapper'.split(' '));
     this.clearImgsStore();
     toys.forEach(toy => {
       wrapper.append(this.createToy(toy))
@@ -107,8 +107,9 @@ class Table {
     toyData.forEach((toy, i) => {
       const node: NodeCreator = new NodeCreator();
       const mode = toy.mode !== 'normal' ? 'opacity-60' : 'opacity-100';
-      const img: HTMLImageElement = <HTMLImageElement>node.createNode('img', `${mode} max-h-[130px] absolute px-4 w-[${10 - i * 2}0%]`.split(' '));
-      const wrapperImg = node.createNode('div', 'flex w-full h-full absolute justify-center items-center'.split(' '));
+      const img: HTMLImageElement = <HTMLImageElement>node.createNode('img', `${mode} max-h-[130px] w-full absolute`.split(' '));
+      const width = i ? 'w-[50%]' : 'w-[100%]';
+      const wrapperImg = node.createNode('div', `flex ${width} h-full absolute justify-center items-center`.split(' '));
       let srcImg = '';
       switch (toy.name) {
         case 'duck': srcImg = duckImg; break;
@@ -119,6 +120,7 @@ class Table {
         case 'watermelon': srcImg = watermelonImg; break;
       }
       img.src = srcImg;
+      if (toy.rightAnswer) img.classList.add('wave');
       wrapperImg.append(img);
       wrapperImg.dataset.alt = toy.alt;
       wrapper.append(wrapperImg);

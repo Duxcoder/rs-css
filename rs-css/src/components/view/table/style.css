@@ -46,9 +46,28 @@
   color: #0d586c;
   font-size: 14px;
   width: max-content;
-  top: -80%;
+  top: -90%;
   filter: none;
 }
 .hover:hover::after {
   filter: none;
+}
+
+@keyframes bgWaves {
+  0% {
+    background-position-x: 0%;
+  }
+  50% {
+    background-position-x: 10vw;
+  }
+  100% {
+    background-position-x: 0%;
+  }
+}
+
+.animTable {
+  border-bottom: solid 1vw #1565b5;
+  border-right: solid 0.5vw #a5c5ff;
+  border-left: solid 0.5vw #17518c;
+  animation: bgWaves 10s infinite ease-in-out;
 }
