@@ -125,7 +125,7 @@ class CodeArea {
 
       const enterBtn = function () {
         if (input instanceof HTMLInputElement) {
-          const rightAnswer = answer.includes(input.value);
+          const rightAnswer = answer.includes(input.value.trim());
 
           if (!rightAnswer) {
             wrapper.classList.add('shake');
