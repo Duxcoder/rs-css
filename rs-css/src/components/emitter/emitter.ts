@@ -8,21 +8,11 @@ class Emitter {
 
   emit(eventName: string, data?: number | NextLvl) {
     const event = this.events[eventName];
-    if (event) {
-      event.forEach(fn => {
-        if (data !== undefined) {
-          fn(data);
-        } else {
-          fn();
-        }
-      });
-    }
+    event && event.forEach(fn => data !== undefined ? fn(data) : fn());
   }
 
   subscribe(eventName: string, callback: (arg?: number | NextLvl) => void) {
-    if (!this.events[eventName]) {
-      this.events[eventName] = [];
-    }
+    !this.events[eventName] && (this.events[eventName] = []);
     this.events[eventName].push(callback);
     return () => {
       this.events[eventName] = this.events[eventName].filter(eventFn => callback !== eventFn);
