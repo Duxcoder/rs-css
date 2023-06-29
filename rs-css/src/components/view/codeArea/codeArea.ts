@@ -1,12 +1,15 @@
 import NodeCreator from "../../../util/nodeCreator/nodeCreator";
 import Panel from "./panel/panel";
-import { Code } from "../../../types";
-import hljs from 'highlight.js/lib/core'
 import Emitter from "../../emitter/emitter";
+import { Code, CallbackGiveNode } from "../../../types";
+import hljs from 'highlight.js/lib/core'
+import 'highlight.js/styles/atom-one-light.css';
 import './style.css';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 hljs.registerLanguage('xml', require('highlight.js/lib/languages/xml'));
-type CallbackGiveNode = (node: HTMLElement, i?: number) => void
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+hljs.registerLanguage('css', require('highlight.js/lib/languages/css'));
+
 class CodeArea {
   public nodesViewer!: (HTMLElement | HTMLElement[])[][];
   public cssEditor: Panel;
@@ -56,13 +59,13 @@ class CodeArea {
 
   private editorContent() {
     const node: NodeCreator = new NodeCreator();
-    const input = node.createNode('input', 'w-full h-8 outline-none'.split(' '));
-    const wrapper: HTMLElement = node.createNode('div', 'flex w-full h-full m-0'.split(' '));
+    const input = node.createNode('input', 'absolute w-full h-8 outline-none'.split(' '));
+    const wrapper: HTMLElement = node.createNode('div', 'flex relative w-full h-full m-0'.split(' '));
     const btn: HTMLElement = node.createNode('button', 'flex justify-center items-center w-[100px] h-8 transition bg-gray-800 text-white hover:bg-gray-400'.split(' '), 'Enter')
     this.btn = btn;
     this.input = input;
     this.wrapper = wrapper;
-    wrapper.append(input, btn)
+    wrapper.append(input, btn);
 
     return wrapper;
   }
@@ -141,6 +144,17 @@ class CodeArea {
         if (e.key === 'Enter') enterBtn()
       });
     }
+
+    const cssHighlight = new NodeCreator().createNode('div', 'text-[#e45649] py-1 pointer-events-none h-8 absolute z-10'.split(' '));
+    this.wrapper?.prepend(cssHighlight);
+
+    input?.addEventListener('input', function () {
+      if (this instanceof HTMLInputElement) {
+        const inputText = this.value;
+        const highlightSelector = hljs.highlight(inputText, { language: 'css' }).value;
+        cssHighlight.innerHTML = highlightSelector
+      }
+    })
   }
 }
 

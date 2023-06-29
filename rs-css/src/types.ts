@@ -24,4 +24,7 @@ enum Node {
   Ul = 'ul',
   Li = 'li'
 }
-export { Data, Toys, NamesToy, Code, NextLvl, Node }
+
+type CallbackGiveNode = (node: HTMLElement, i?: number) => void
+
+export { Data, Toys, NamesToy, Code, NextLvl, Node, CallbackGiveNode }
