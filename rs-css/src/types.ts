@@ -18,4 +18,10 @@ type NamesToy = 'duck' | 'ring' | 'ring-o' | 'mattress' | 'ball' | 'watermelon';
 
 type NextLvl = { rightAnswer?: boolean, selectLvl?: number }
 
-export { Data, Toys, NamesToy, Code, NextLvl }
+enum Node {
+  Div = 'div',
+  Span = 'span',
+  Ul = 'ul',
+  Li = 'li'
+}
+export { Data, Toys, NamesToy, Code, NextLvl, Node }
