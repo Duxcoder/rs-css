@@ -75,7 +75,7 @@ const dataLvls: Data[] = [
       [{ name: 'ring', mode: 'normal', alt: '<ring></ring>' },
       { name: 'ball', mode: 'normal', alt: '<ball></ball>' }],
     ],
-    answer: ['ring#orange ball', '#orange ball', '#orange > ball', '#orange ball:first-child', '#orange ball:nth-child(1)'],
+    answer: ['ring#orange ball', '#orange ball', '#orange > ball','#orange>ball', '#orange ball:first-child', '#orange ball:nth-child(1)'],
     taskSubtitle: 'Combine the Descendant & ID Selectors',
     description: 'You can combine any selector with the descendent selector.'
   },
@@ -140,7 +140,7 @@ const dataLvls: Data[] = [
       [{ name: 'mattress', mode: 'normal', alt: '<mattress></mattress>' },
       { name: 'ball', mode: 'invisible', alt: '<ball></ball>', rightAnswer: true }],
     ],
-    answer: ['.sea .mattress ball.invisible', '.mattress ball.invisible', '.sea .mattress > ball.invisible', '.mattress > ball.invisible'],
+    answer: ['.sea mattress ball.invisible', 'mattress ball.invisible', '.sea mattress > ball.invisible', 'mattress > ball.invisible', 'mattress>ball.invisible'],
     taskSubtitle: 'You can do it...',
     description: 'Combine what you learned in the last few levels to solve this one!'
   },

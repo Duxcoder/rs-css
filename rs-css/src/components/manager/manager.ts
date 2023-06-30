@@ -85,9 +85,14 @@ class Manager {
   }
 
   newLvl(lvl: number) {
+    this.checkWinner();
     const dataLvl = this.data[lvl]
     const maxLvl: number = this.data.length - 1;
     this.view.updateLvl(dataLvl, maxLvl, this.lvl, this.completeLvls);
+  }
+
+  checkWinner() {
+    if (this.completeLvls.includes(9)) alert('YOU WON!');
   }
 }
 
