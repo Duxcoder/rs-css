@@ -1,7 +1,7 @@
 import NodeCreator from "../../../util/nodeCreator/nodeCreator";
 import Panel from "./panel/panel";
 import Emitter from "../../emitter/emitter";
-import { Code, CallbackGiveNode } from "../../../types";
+import { Code, CallbackGiveNode, NextLvl } from "../../../types";
 import hljs from 'highlight.js/lib/core'
 import 'highlight.js/styles/atom-one-light.css';
 import './style.css';
@@ -9,6 +9,9 @@ import './style.css';
 hljs.registerLanguage('xml', require('highlight.js/lib/languages/xml'));
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 hljs.registerLanguage('css', require('highlight.js/lib/languages/css'));
+
+const SELECT = 'select';
+const SHAKE = 'shake';
 
 class CodeArea {
   public nodesViewer!: (HTMLElement | HTMLElement[])[][];
@@ -71,6 +74,7 @@ class CodeArea {
   }
 
   mouseEvents(answer: string[]) {
+    let index = -1;
     const giveNode = (nodes: (HTMLElement | HTMLElement[])[] | HTMLElement, i: number, callback: CallbackGiveNode) => {
       if (Array.isArray(nodes)) {
         index++;
@@ -81,7 +85,6 @@ class CodeArea {
         callback(nodes, i);
       }
     };
-    let index = -1;
     this.nodesViewer.forEach((nodesRow, rowIndex) => giveNode(nodesRow, index, (node, i = 0) => {
       node.addEventListener('mouseleave', function () {
         runEmitOut();
@@ -102,20 +105,20 @@ class CodeArea {
       if (this.nodesViewer[rowIndex].includes(node)) {
         this.nodesViewer[rowIndex].forEach(node => {
           if (node instanceof HTMLElement) {
-            node.classList.add('select')
+            node.classList.add(SELECT);
           } else {
-            node[0].classList.add('select')
+            node[0].classList.add(SELECT);
           }
         })
       } else {
         if (node instanceof HTMLElement) {
-          node.classList.add('select');
+          node.classList.add(SELECT);
         }
       }
     }
     const leaveNodes = (rowIndex: number) => {
       this.nodesViewer[rowIndex].forEach((nodes, i) => giveNode(nodes, i, (node) => {
-        node.classList.remove('select')
+        node.classList.remove(SELECT);
       }))
     }
 
@@ -131,8 +134,8 @@ class CodeArea {
           const rightAnswer = answer.includes(input.value.trim());
 
           if (!rightAnswer) {
-            wrapper.classList.add('shake');
-            setTimeout(() => { wrapper.classList.remove('shake') }, 400);
+            wrapper.classList.add(SHAKE);
+            setTimeout(() => { wrapper.classList.remove(SHAKE) }, 400);
           }
 
           if (rightAnswer) runEmitRightAnswer();
@@ -155,6 +158,20 @@ class CodeArea {
         cssHighlight.innerHTML = highlightSelector
       }
     })
+    const selectCode = (i?: number | NextLvl) => {
+      index = -1
+      this.nodesViewer.forEach((nodesRow, rowIndex) => {
+        giveNode(nodesRow, index, (node, indexNode) => {
+          if (i === indexNode) hoverNodes(node, rowIndex);
+        });
+      })
+    }
+    const leaveCode = () => {
+      this.nodesViewer.forEach((nodesRow, rowIndex) =>
+        leaveNodes(rowIndex));
+    }
+    this.emitter.subscribe('selectCode', selectCode);
+    this.emitter.subscribe('leaveCode', leaveCode);
   }
 }
 

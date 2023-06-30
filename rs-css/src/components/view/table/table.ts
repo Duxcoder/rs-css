@@ -159,8 +159,14 @@ class Table {
       }
     });
     this.imgs.forEach((img, i) => {
-      img.addEventListener('mouseover', () => selectImg(i));
-      img.addEventListener('mouseleave', unselectImg);
+      img.addEventListener('mouseover', () => {
+        selectImg(i);
+        this.emitter.emit('selectCode', i);
+      });
+      img.addEventListener('mouseleave', () => {
+        unselectImg();
+        this.emitter.emit('leaveCode');
+      });
     })
   }
 }
