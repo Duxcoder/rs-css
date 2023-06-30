@@ -62,9 +62,9 @@ class CodeArea {
 
   private editorContent() {
     const node: NodeCreator = new NodeCreator();
-    const input = node.createNode('input', 'absolute w-full h-8 outline-none'.split(' '));
+    const input = node.createNode('input', 'absolute font-sans left-0 w-[78%] overflow-hidden h-8 outline-none'.split(' '));
     const wrapper: HTMLElement = node.createNode('div', 'flex relative w-full h-full m-0'.split(' '));
-    const btn: HTMLElement = node.createNode('button', 'flex justify-center items-center w-[100px] h-8 transition bg-gray-800 text-white hover:bg-gray-400'.split(' '), 'Enter')
+    const btn: HTMLElement = node.createNode('button', 'absolute right-0 flex justify-center items-center w-[20%] h-8 transition bg-gray-800 text-white hover:bg-gray-400'.split(' '), 'Enter')
     this.btn = btn;
     this.input = input;
     this.wrapper = wrapper;
@@ -148,7 +148,7 @@ class CodeArea {
       });
     }
 
-    const cssHighlight = new NodeCreator().createNode('div', 'text-[#e45649] py-1 pointer-events-none h-8 absolute z-10'.split(' '));
+    const cssHighlight = new NodeCreator().createNode('pre', 'font-sans text-[#e45649] w-[78%] overflow-hidden py-1 pointer-events-none h-8 absolute z-10'.split(' '));
     this.wrapper?.prepend(cssHighlight);
 
     input?.addEventListener('input', function () {
