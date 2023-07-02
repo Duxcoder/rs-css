@@ -5,6 +5,7 @@ import { Code, CallbackGiveNode, NextLvl } from "../../../types";
 import hljs from 'highlight.js/lib/core'
 import 'highlight.js/styles/hybrid.css'
 import './style.css';
+import dataLvls from "../../dataApp";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 hljs.registerLanguage('xml', require('highlight.js/lib/languages/xml'));
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -151,11 +152,15 @@ class CodeArea {
     const cssHighlight = new NodeCreator().createNode('pre', 'font-sans text-[#e45649] w-[78%] overflow-hidden py-1 pointer-events-none h-8 absolute z-10'.split(' '));
     this.wrapper?.prepend(cssHighlight);
 
+    const highlighting = (text: string) => {
+      const highlightSelector = hljs.highlight(text, { language: 'css' }).value;
+      cssHighlight.innerHTML = highlightSelector
+    }
+
     input?.addEventListener('input', function () {
       if (this instanceof HTMLInputElement) {
         const inputText = this.value;
-        const highlightSelector = hljs.highlight(inputText, { language: 'css' }).value;
-        cssHighlight.innerHTML = highlightSelector
+        highlighting(inputText);
       }
     })
     const selectCode = (i?: number | NextLvl) => {
@@ -170,8 +175,28 @@ class CodeArea {
       this.nodesViewer.forEach((nodesRow, rowIndex) =>
         leaveNodes(rowIndex));
     }
+    const runHelp = () => {
+      localStorage.setItem('help', 'on');
+      if (input instanceof HTMLInputElement) {
+        input.value = '';
+        cssHighlight.innerHTML = '';
+        const index = localStorage.getItem('lvl');
+        const text = dataLvls[index ? +index : 0].answer[0];
+        const printLetters = (input: HTMLInputElement, text: string, index: number) => {
+          if (index < text.length) {
+            setTimeout(() => {
+              input.value += text[index];
+              highlighting(input.value);
+              printLetters(input, text, index + 1);
+            }, 100);
+          }
+        }
+        printLetters(input, text, 0);
+      }
+    }
     this.emitter.subscribe('selectCode', selectCode);
     this.emitter.subscribe('leaveCode', leaveCode);
+    this.emitter.subscribe('help', runHelp);
   }
 }
 

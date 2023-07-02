@@ -32,7 +32,7 @@ class View {
     parentNode.append(renderNode);
   }
 
-  public init(dataLvl: Data, lvls: number, lvl: number, completeLvls: number[]): void {
+  public init(dataLvl: Data, lvls: number, lvl: number, completeLvls: number[], lvlsUsedHelp: number[]): void {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { taskTitle, code, toys, taskSubtitle, description } = dataLvl;
     const main: HTMLElement = this.mainSection();
@@ -40,7 +40,7 @@ class View {
     const title: HTMLElement = this.table.createTitleTableNode(taskTitle);
     const table: HTMLElement = this.table.createTableNode(toys);
     const runEventsTable = () => this.table.mouseEvents();
-    const sidebar: HTMLElement = this.sidebar.createSidebarNode(lvls, lvl, completeLvls); // taskSubtitle, description
+    const sidebar: HTMLElement = this.sidebar.createSidebarNode(lvls, lvl, completeLvls, lvlsUsedHelp); // taskSubtitle, description
     const codeArea: HTMLElement = this.codeArea.createCodeAreaNode(code); // code
     const runEventsCodeArea = () => this.codeArea.mouseEvents(dataLvl.answer);
     const footer: HTMLElement = this.footer.createFooterNode();
@@ -65,9 +65,9 @@ class View {
     document.body.innerHTML = '';
   }
 
-  public updateLvl(dataLvl: Data, lvls: number, lvl: number, completeLvls: number[]): void {
+  public updateLvl(dataLvl: Data, lvls: number, lvl: number, completeLvls: number[], lvlsUsedHelp: number[]): void {
     this.clearPage();
-    this.init(dataLvl, lvls, lvl, completeLvls);
+    this.init(dataLvl, lvls, lvl, completeLvls, lvlsUsedHelp);
   }
 }
 

@@ -7,12 +7,15 @@ const RESTART = 'restart';
 const LVL_COMPLETE = 'lvlComplete';
 const LVL = 'lvl';
 const NEXT_LVL = 'nextLvl';
+const LVL_HELP = 'lvlsHelp';
+const HELP_USED = 'help';
 
 class Manager {
   public view: View;
   public data: Data[];
   public emitter: Emitter;
   private completeLvls: number[];
+  private lvlsUsedHelp: number[];
   private lvl: number;
   constructor() {
     this.emitter = new Emitter();
@@ -20,6 +23,7 @@ class Manager {
     this.data = dataLvls;
     this.lvl = 0;
     this.completeLvls = [];
+    this.lvlsUsedHelp = [];
   }
 
   init() {
@@ -27,13 +31,16 @@ class Manager {
     const setRestartOff = () => localStorage.setItem(RESTART, 'off');
     const setCompleteLvls = () => {
       const lvls = localStorage.getItem(LVL_COMPLETE);
-      if (lvls !== null) {
+      const lvlsHelp = localStorage.getItem(LVL_HELP);
+      if (lvls !== null && lvlsHelp != null) {
         this.completeLvls = JSON.parse(lvls);
+        this.lvlsUsedHelp = JSON.parse(lvlsHelp);
       }
     }
     const resetData = () => {
       localStorage.clear();
       this.completeLvls = [];
+      this.lvlsUsedHelp = [];
       this.lvl = 0;
     }
     const setLvl = (): number => {
@@ -43,7 +50,7 @@ class Manager {
         this.lvl = num;
         return num
       }
-      return 0
+      return 0;
     }
 
     if (isRestart()) {
@@ -62,7 +69,7 @@ class Manager {
   start() {
     const dataLvl = this.data[this.lvl];
     const maxLvl: number = this.data.length - 1;
-    this.view.init(dataLvl, maxLvl, this.lvl, this.completeLvls);
+    this.view.init(dataLvl, maxLvl, this.lvl, this.completeLvls, this.lvlsUsedHelp);
     this.emitter.subscribe(NEXT_LVL, (data?: number | NextLvl) => {
       if (data !== undefined && typeof data !== 'number') {
 
@@ -75,6 +82,11 @@ class Manager {
         if (data.rightAnswer) {
           this.completeLvls[this.lvl] = this.lvl;
           localStorage.setItem(LVL_COMPLETE, JSON.stringify(this.completeLvls));
+          if (localStorage.getItem(HELP_USED)) {
+            this.lvlsUsedHelp[this.lvl] = this.lvl
+            localStorage.setItem(LVL_HELP, JSON.stringify(this.lvlsUsedHelp));
+            localStorage.removeItem(HELP_USED);
+          }
           this.data.length - 1 > this.lvl ? this.lvl++ : this.lvl = 0;
           localStorage.setItem(LVL, this.lvl.toString());
           return setTimeout(() => this.newLvl(this.lvl), 500);
@@ -88,7 +100,7 @@ class Manager {
     this.checkWinner();
     const dataLvl = this.data[lvl]
     const maxLvl: number = this.data.length - 1;
-    this.view.updateLvl(dataLvl, maxLvl, this.lvl, this.completeLvls);
+    this.view.updateLvl(dataLvl, maxLvl, this.lvl, this.completeLvls, this.lvlsUsedHelp);
   }
 
   checkWinner() {
