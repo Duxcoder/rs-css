@@ -32,10 +32,8 @@ class Manager {
     const setCompleteLvls = () => {
       const lvls = localStorage.getItem(LVL_COMPLETE);
       const lvlsHelp = localStorage.getItem(LVL_HELP);
-      if (lvls !== null && lvlsHelp != null) {
-        this.completeLvls = JSON.parse(lvls);
-        this.lvlsUsedHelp = JSON.parse(lvlsHelp);
-      }
+      if (lvls !== null) this.completeLvls = JSON.parse(lvls);
+      if (lvlsHelp != null) this.lvlsUsedHelp = JSON.parse(lvlsHelp);
     }
     const resetData = () => {
       localStorage.clear();
