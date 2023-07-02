@@ -6,11 +6,11 @@ class Panel {
     this.mode = mode;
   }
   public createPanelNode(content?: HTMLElement, title?: string, descr?: string): HTMLElement {
-    const TEXT_COLOR = this.mode === 'light' ? 'text-gray-500' : 'text-[#aad1b8]';
-    const BG_COLOR_HEADER = this.mode === 'light' ? 'bg-blue-100' : 'bg-[#30364c]';
-    const TEXT_COLOR_HEADER = this.mode === 'light' ? 'text-black' : 'text-[#c8cddd]';
-    const BG_COLOR_CODE_WRAPPER = this.mode === 'light' ? 'bg-[#fff]' : 'bg-[#2d363b]';
-    const BG_COLOR_LIST = this.mode === 'light' ? 'bg-[#fff]' : 'bg-[#4a585f]';
+    const TEXT_COLOR = this.mode === 'light' ? 'text-gray-500' : 'text-[#a9d2ff]';
+    const BG_COLOR_HEADER = this.mode === 'light' ? 'bg-blue-100' : 'bg-[#1665b5]';
+    const TEXT_COLOR_HEADER = this.mode === 'light' ? 'text-black' : 'text-[#ffffff]';
+    const BG_COLOR_CODE_WRAPPER = this.mode === 'light' ? 'bg-[#fff]' : 'bg-[#303030]';
+    const BG_COLOR_LIST = this.mode === 'light' ? 'bg-[#fff]' : 'bg-[#474747]';
     const TEXT_COLOR_LIST = this.mode === 'light' ? 'text-[#000]' : 'text-[#ccc]';
 
     const { Div, Span, Ul, Li } = Node
@@ -19,9 +19,9 @@ class Panel {
     const header = node.createNode(Div, `${BG_COLOR_HEADER} flex justify-between items-center px-8 h-10 w-full`.split(' '));
     const titleHeader = node.createNode(Span, `${TEXT_COLOR_HEADER}`.split(' '), title);
     const descrHeader = node.createNode(Span, `${TEXT_COLOR}`.split(' '), descr);
-    const codeWrapper = node.createNode(Div, `${BG_COLOR_CODE_WRAPPER} flex justify-center w-full min-h-[300px] py-2`.split(' '));
-    const listWrapper = node.createNode(Div, `${BG_COLOR_LIST} ${TEXT_COLOR_LIST} flex justify-end w-0.5/12`.split(' '));
-    const list = node.createNode(Ul, 'flex items-end px-4 flex-col'.split(' '))
+    const codeWrapper = node.createNode(Div, `${BG_COLOR_CODE_WRAPPER} flex justify-start w-full min-h-[300px]`.split(' '));
+    const listWrapper = node.createNode(Div, `${BG_COLOR_LIST} ${TEXT_COLOR_LIST} border-r-2 border-[#a1a1a14a] flex justify-end w-0.5/12`.split(' '));
+    const list = node.createNode(Ul, 'flex items-end px-2 flex-col'.split(' '))
     const fillNumberList = (list: HTMLElement, num = 15) => {
       for (let i = 0; i < num; i++) {
         list.append(node.createNode(Li, [], (i + 1).toString()));

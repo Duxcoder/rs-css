@@ -3,7 +3,7 @@ import Panel from "./panel/panel";
 import Emitter from "../../emitter/emitter";
 import { Code, CallbackGiveNode, NextLvl } from "../../../types";
 import hljs from 'highlight.js/lib/core'
-import 'highlight.js/styles/atom-one-light.css';
+import 'highlight.js/styles/hybrid.css'
 import './style.css';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 hljs.registerLanguage('xml', require('highlight.js/lib/languages/xml'));
