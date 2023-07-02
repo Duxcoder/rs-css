@@ -1,5 +1,6 @@
 import NodeCreator from "../../../util/nodeCreator/nodeCreator";
 import logo from "./img/logo.png";
+
 class Header {
 
   public createHeaderNode(): HTMLElement {
