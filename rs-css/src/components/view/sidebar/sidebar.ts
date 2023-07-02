@@ -10,6 +10,10 @@ const NEXT_LVL = 'nextLvl';
 
 class Sidebar {
   constructor(public emitter: Emitter) { }
+  public addRemoveClasses = (node: HTMLElement, addClass: string, removeClass: string) => {
+    node.classList.add(addClass);
+    node.classList.remove(removeClass);
+  }
   public createSidebarNode(lvls: number, currentLvl: number, completeLvls: number[], lvlsUsedHelp: number[]): HTMLElement {
     const node: NodeCreator = new NodeCreator();
     const sidebar: HTMLElement = node.createNode('aside', 'flex flex-col items-center gap-3 p-6 row-span-2 bg-blue-950 text-white'.split(' '));
@@ -18,23 +22,12 @@ class Sidebar {
           Levels
         </h3>
         `
-
     const ul: HTMLElement = node.createNode('ul', 'flex w-[10rem] justify-center flex-col'.split(' '));
-    const addActive = (node: HTMLElement) => {
-      node.classList.add(ORANGE);
-      node.classList.remove(SLATE);
-    };
-    const removeActive = (node: HTMLElement) => {
-      node.classList.remove(ORANGE)
-    };
-    const addComplete = (node: HTMLElement) => {
-      node.classList.add(GREEN)
-      node.classList.remove(SLATE)
-    };
-    const removeComplete = (node: HTMLElement) => {
-      node.classList.remove(GREEN)
-      node.classList.add(SLATE)
-    };
+    const addActive = (node: HTMLElement) => this.addRemoveClasses(node, ORANGE, SLATE);
+    const removeActive = (node: HTMLElement) => this.addRemoveClasses(node, 'null', ORANGE);
+    const addComplete = (node: HTMLElement) => this.addRemoveClasses(node, GREEN, SLATE);
+    const removeComplete = (node: HTMLElement) => this.addRemoveClasses(node, SLATE, GREEN);
+
     for (let i = 0; i < lvls + 1; i += 1) {
       const li: HTMLElement = node.createNode('li', 'flex'.split(' '));
       const contentLink = lvlsUsedHelp.includes(i) ? (i + 1) + ' helped' : (i + 1).toString();
@@ -62,7 +55,7 @@ class Sidebar {
     btn.addEventListener('click', () => {
       localStorage.setItem(RESTART, 'on');
       this.emitter.emit(RESTART);
-    }, {once: true});
+    }, { once: true });
     return btn;
   }
 
