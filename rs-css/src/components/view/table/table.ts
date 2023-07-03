@@ -1,5 +1,9 @@
 import NodeCreator from "../../../util/nodeCreator/nodeCreator";
+import { Toys, NextLvl } from "../../../types";
+import Emitter from "../../emitter/emitter";
+
 import './style.css'
+
 import wave from './img/wave.png';
 import duckImg from './img/duck.svg';
 import ringImg from './img/ring.svg';
@@ -7,8 +11,6 @@ import ringOImg from './img/ring-o.svg';
 import mattressImg from './img/mattress.svg';
 import ballImg from './img/ball.svg';
 import watermelonImg from './img/watermelon.svg';
-import { Toys, NextLvl } from "../../../types";
-import Emitter from "../../emitter/emitter";
 
 class Table {
   constructor(public emitter: Emitter) { }

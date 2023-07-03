@@ -1,6 +1,6 @@
 import View from '../view/view';
 import dataLvls from '../dataApp';
-import { Data, NextLvl } from '../../types';
+import { Data, NextLvl, Code, Toys } from '../../types';
 import Emitter from '../emitter/emitter';
 
 const RESTART = 'restart';
@@ -12,7 +12,7 @@ const HELP_USED = 'help';
 
 class Manager {
   public view: View;
-  public data: Data[];
+  public data: Data<Code, Toys>[];
   public emitter: Emitter;
   private completeLvls: number[];
   private lvlsUsedHelp: number[];

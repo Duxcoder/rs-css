@@ -1,6 +1,6 @@
-import { Data } from "../types"
+import { Data, Code, Toys} from "../types"
 
-const dataLvls: Data[] = [
+const dataLvls: Data<Code, Toys>[] = [
   {
     taskTitle: 'Select the rings',
     code: [

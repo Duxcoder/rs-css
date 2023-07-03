@@ -1,7 +1,7 @@
-interface Data {
+interface Data<TCode, TToys> {
   taskTitle: string;
-  code: Code;
-  toys: Toys[][];
+  code: TCode;
+  toys: TToys[][];
   answer: string[];
   taskSubtitle: string;
   description: string;

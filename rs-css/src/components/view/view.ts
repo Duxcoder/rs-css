@@ -4,15 +4,15 @@ import CodeArea from './codeArea/codeArea';
 import Sidebar from './sidebar/sidebar';
 import Footer from './footer/footer';
 import NodeCreator from '../../util/nodeCreator/nodeCreator';
-import { Data } from '../../types';
+import { Data, Code, Toys } from '../../types';
 import Emitter from '../emitter/emitter';
+
 class View {
   public header: Header;
   public table: Table;
   public codeArea: CodeArea;
   public sidebar: Sidebar;
   public footer: Footer;
-  private nodesPage!: { main: HTMLElement; header: HTMLElement; title: HTMLElement; table: HTMLElement; sidebar: HTMLElement; codeArea: HTMLElement; footer: HTMLElement; };
 
   constructor(emitter: Emitter) {
     this.header = new Header();
@@ -32,9 +32,8 @@ class View {
     parentNode.append(renderNode);
   }
 
-  public init(dataLvl: Data, lvls: number, lvl: number, completeLvls: number[], lvlsUsedHelp: number[]): void {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { taskTitle, code, toys, taskSubtitle, description } = dataLvl;
+  public init(dataLvl: Data<Code, Toys>, lvls: number, lvl: number, completeLvls: number[], lvlsUsedHelp: number[]): void {
+    const { taskTitle, code, toys } = dataLvl;
     const main: HTMLElement = this.mainSection();
     const header: HTMLElement = this.header.createHeaderNode();
     const title: HTMLElement = this.table.createTitleTableNode(taskTitle);
@@ -56,16 +55,12 @@ class View {
 
     runEventsTable();
     runEventsCodeArea();
-
-    this.nodesPage = {
-      main, header, title, table, sidebar, codeArea, footer
-    }
   }
   private clearPage = () => {
     document.body.innerHTML = '';
   }
 
-  public updateLvl(dataLvl: Data, lvls: number, lvl: number, completeLvls: number[], lvlsUsedHelp: number[]): void {
+  public updateLvl(dataLvl: Data<Code, Toys>, lvls: number, lvl: number, completeLvls: number[], lvlsUsedHelp: number[]): void {
     this.clearPage();
     this.init(dataLvl, lvls, lvl, completeLvls, lvlsUsedHelp);
   }
