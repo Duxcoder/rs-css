@@ -36,18 +36,25 @@
 
 .hover::after {
   content: attr(data-alt);
-  position: absolute;
+  /* position: absolute; */
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 14px;
-  background: rgb(0 154 225 / 34%);
+  /* background: rgb(0 154 225 / 34%); */
+  background: rgba(255, 255, 255, 0.9);
+  /* background: #fff; */
   border-radius: 4rem;
   color: #0d586c;
   font-size: 14px;
-  width: max-content;
-  top: -90%;
+  white-space: nowrap;
+  /* top: -200%; */
+  margin-bottom: 100px;
+  margin-right: 100px;
   filter: none;
+  z-index: 2;
+  border: solid 1px #0d586c61;
 }
 .hover:hover::after {
   filter: none;

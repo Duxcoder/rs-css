@@ -7,8 +7,8 @@ class Panel {
   }
   public createPanelNode(content?: HTMLElement, title?: string, descr?: string): HTMLElement {
     const TEXT_COLOR = this.mode === 'light' ? 'text-gray-500' : 'text-[#a9d2ff]';
-    const BG_COLOR_HEADER = this.mode === 'light' ? 'bg-blue-100' : 'bg-[#1665b5]';
-    const TEXT_COLOR_HEADER = this.mode === 'light' ? 'text-black' : 'text-[#ffffff]';
+    const BG_COLOR_HEADER = this.mode === 'light' ? 'bg-black' : 'bg-[#1665b5]';
+    const TEXT_COLOR_HEADER = this.mode === 'light' ? 'text-white' : 'text-[#ffffff]';
     const BG_COLOR_CODE_WRAPPER = this.mode === 'light' ? 'bg-[#fff]' : 'bg-[#303030]';
     const BG_COLOR_LIST = this.mode === 'light' ? 'bg-[#fff]' : 'bg-[#474747]';
     const TEXT_COLOR_LIST = this.mode === 'light' ? 'text-[#000]' : 'text-[#ccc]';
@@ -21,16 +21,16 @@ class Panel {
     const descrHeader = node.createNode(Span, `${TEXT_COLOR}`.split(' '), descr);
     const codeWrapper = node.createNode(Div, `${BG_COLOR_CODE_WRAPPER} flex justify-start w-full min-h-[300px]`.split(' '));
     const listWrapper = node.createNode(Div, `${BG_COLOR_LIST} ${TEXT_COLOR_LIST} border-r-2 border-[#a1a1a14a] flex justify-end w-0.5/12`.split(' '));
-    const list = node.createNode(Ul, 'flex items-end px-2 flex-col'.split(' '))
+    const list = node.createNode(Ul, 'flex items-end py-2 px-2 flex-col'.split(' '))
     const fillNumberList = (list: HTMLElement, num = 15) => {
       for (let i = 0; i < num; i++) {
         list.append(node.createNode(Li, [], (i + 1).toString()));
       }
     }
-    const contentWrapper = node.createNode(Div, `${BG_COLOR_CODE_WRAPPER} flex px-4 w-11/12 text-gray-900`.split(' '));
+    const contentWrapper = node.createNode(Div, `${BG_COLOR_CODE_WRAPPER} py-2 flex px-4 w-11/12 text-gray-900`.split(' '));
 
     if (content !== undefined) contentWrapper.append(content);
-    fillNumberList(list, 20);
+    fillNumberList(list, 16);
     listWrapper.append(list);
     codeWrapper.append(listWrapper, contentWrapper)
     header.append(titleHeader, descrHeader);

@@ -32,14 +32,14 @@ class CodeArea {
     const htmlViewer = this.htmlViewer.createPanelNode(viewerContent, 'HTML Viewer', 'table.html');
 
     const node: NodeCreator = new NodeCreator();
-    const codeArea: HTMLElement = node.createNode('section', 'flex bg-stone-300 flex-col xl:flex-row'.split(' '));
+    const codeArea: HTMLElement = node.createNode('section', 'mt-6 lg:mt-0 sm:text-sm flex w-full bg-stone-300 flex-col text-[0.7rem] lg:flex-row'.split(' '));
     codeArea.append(cssEditor, htmlViewer);
     return codeArea;
   }
 
   private transformCode(code: Code): HTMLElement {
     const node: NodeCreator = new NodeCreator();
-    const pre: HTMLElement = node.createNode('pre', 'flex flex-col'.split(' '));
+    const pre: HTMLElement = node.createNode('pre', 'flex flex-col whitespace-break-spaces'.split(' '));
     const appendCodeRow = (arrSelector: (string | string[])[], countTab = 1): (HTMLElement | HTMLElement[])[] => {
       const maps: (HTMLElement | HTMLElement[])[] = arrSelector.map(selector => {
         const span: HTMLElement = node.createNode('span', 'flex cursor-default'.split(' ')) as HTMLElement;
@@ -63,7 +63,7 @@ class CodeArea {
 
   private editorContent() {
     const node: NodeCreator = new NodeCreator();
-    const input = node.createNode('input', 'absolute font-sans left-0 w-[78%] overflow-hidden h-8 outline-none'.split(' '));
+    const input = node.createNode('input', 'absolute font-sans left-0 w-[78%] overflow-hidden outline-none'.split(' '));
     const wrapper: HTMLElement = node.createNode('div', 'flex relative w-full h-full m-0'.split(' '));
     const btn: HTMLElement = node.createNode('button', 'absolute right-0 flex justify-center items-center w-[20%] h-8 transition bg-gray-800 text-white hover:bg-gray-400'.split(' '), 'Enter')
     this.btn = btn;
@@ -149,7 +149,7 @@ class CodeArea {
       });
     }
 
-    const cssHighlight = new NodeCreator().createNode('pre', 'font-sans text-[#e45649] w-[78%] overflow-hidden py-1 pointer-events-none h-8 absolute z-10'.split(' '));
+    const cssHighlight = new NodeCreator().createNode('pre', 'font-sans text-[#e45649] w-[78%] overflow-hidden pointer-events-none absolute z-10'.split(' '));
     this.wrapper?.prepend(cssHighlight);
 
     const highlighting = (text: string) => {

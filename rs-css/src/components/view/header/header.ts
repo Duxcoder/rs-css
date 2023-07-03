@@ -11,20 +11,19 @@ class Header {
         class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
       >
         <div class="flex lg:flex-1">
-          <a href="#" class="-m-1.5 p-1.5">
-            <span class="sr-only">Your Company</span>
+          <a href="#" class="flex flex-row-reverse font-medium">
             <img
-              class="h-12 w-auto"
+              class="h-10 w-auto sm:h-16"
               src=${logo}
               alt=""
             />
           </a>
         </div>
         <div class="flex gap-x-12">
-          <a href="https://rs.school/" target="_blink" class="text-sm font-semibold leading-6 text-gray-900"
+          <a href="https://rs.school/" target="_blink" class="text-sm font-semibold leading-6 text-[#104a5e] hover:text-black transition"
             >RS School</a
           >
-          <a href="https://github.com/Duxcoder" target="_blink" class="text-sm font-semibold leading-6 text-gray-900"
+          <a href="https://github.com/Duxcoder" target="_blink" class="text-sm font-semibold leading-6 text-[#104a5e] hover:text-black transition"
             >Duxcoder</a
           >
         </div>

@@ -24,7 +24,7 @@ class View {
 
   public mainSection(): HTMLElement {
     const node = new NodeCreator();
-    const main = node.createNode('main', 'relative row-span-2'.split(' '));
+    const main = node.createNode('main', 'flex flex-col items-center overflow-scroll justify-between relative row-span-2'.split(' '));
     return main
   }
 
@@ -45,7 +45,7 @@ class View {
     const runEventsCodeArea = () => this.codeArea.mouseEvents(dataLvl.answer);
     const footer: HTMLElement = this.footer.createFooterNode();
 
-    document.body.classList.add(...'grid grid-cols-[auto_200px] grid-rows-[200px_auto_100px] h-screen'.split(' '));
+    document.body.classList.add(...'grid grid-cols-[auto_120px] sm:grid-cols-[auto_200px] grid-rows-[200px_auto_60px] h-screen'.split(' '));
     this.render(document.body, main)
     this.render(main, header);
     this.render(main, title);

@@ -20,5 +20,5 @@ test('Is the inner toy small?', () => {
   const toys = wrapperToy.querySelectorAll('div');
   expect(toys.length).toBe(2);
   const innerToy = toys[1];
-  expect(innerToy.getAttribute('class')).toContain('w-[50%]');
+  expect(innerToy.getAttribute('class')).toContain('w-[60%]');
 });
