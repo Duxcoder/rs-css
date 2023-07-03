@@ -40,8 +40,8 @@ class View {
     const title: HTMLElement = this.table.createTitleTableNode(taskTitle);
     const table: HTMLElement = this.table.createTableNode(toys);
     const runEventsTable = () => this.table.mouseEvents();
-    const sidebar: HTMLElement = this.sidebar.createSidebarNode(lvls, lvl, completeLvls, lvlsUsedHelp); // taskSubtitle, description
-    const codeArea: HTMLElement = this.codeArea.createCodeAreaNode(code); // code
+    const sidebar: HTMLElement = this.sidebar.createSidebarNode(lvls, lvl, completeLvls, lvlsUsedHelp);
+    const codeArea: HTMLElement = this.codeArea.createCodeAreaNode(code);
     const runEventsCodeArea = () => this.codeArea.mouseEvents(dataLvl.answer);
     const footer: HTMLElement = this.footer.createFooterNode();
 
